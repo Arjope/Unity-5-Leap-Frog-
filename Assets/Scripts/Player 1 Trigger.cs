@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player1Trigger : MonoBehaviour
 {
     // Reference to Player 2's score script
-    public P2ScoreKeep player2ScoreScript;
+    public PlayerManager playerManager;
 
     void OnTriggerEnter(Collider other)
     {
@@ -13,7 +13,7 @@ public class Player1Trigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player2"))
         {
             // Increase Player 2's score using the referenced score script
-            player2ScoreScript.IncreaseScore();
+            playerManager.ChangeScore(2, 1);
         }
     }
 }

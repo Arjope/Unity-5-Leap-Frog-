@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSpeed = 200.0f;
     public float jumpHeight = 6.0f;
     private bool isJumping = false;
+
+    public float pushForce = 3.0f;
+
+    private ControllerColliderHit contact;
 
     public GameObject otherPlayer; // Reference to the other player object
     public float raycastDistance = 2f; // Distance for raycasting
@@ -41,6 +46,17 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isJumping = false;
+        }
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        contact = hit;
+
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body != null && !body.isKinematic)
+        {
+            body.velocity = hit.moveDirection * pushForce;
         }
     }
 }
